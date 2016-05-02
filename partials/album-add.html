@@ -1,0 +1,14 @@
+<div class="navbar " >
+	  <div class="col-lg-12">
+	    <form class="form_phone" name="formPhone">
+	    	<div class="col-lg-4 col-md-3">
+	    		<!-- Username -->
+	      		<input type="text" ng-model="albumName" class="form-control"  placeholder="name " ng-required="true"/>
+	      		<input type="text" ng-model="albumDescription" class="form-control" placeholder="description" ng-required="true"/>
+	      		<input type="text" ng-model="albumYear" class="form-control" placeholder="year" ng-required="true"/>
+          	<button class="btn btn-default col-lg-2 col-md-2" ng-click="formPhone.$valid && addAlbum()">Add Album</button>
+          	</div>
+          	{{message}}
+	    </form>
+	  </div>
+	</div>

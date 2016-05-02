@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+  	  	<div class="col-md-10">
+    	      <ul class="phones">    	      	
+							<p>{{message}}</p>
+					 </ul>
+		</div>
+    <div class="col-md-10">
+      <!--Sidebar content-->
+      Search: <input ng-model="query">
+      Sort by:
+      <select ng-model="orderProp">
+        <option value="name">Alphabetical</option>
+        <option value="year">Newest</option>
+      </select>
+      
+    </div>
+  	</br>
+  	</br>
+    <div class="col-md-10">
+    	      <ul class="phones">    	      	
+							<a href="#/addAlbum">Add a new albums</a>
+					 </ul>
+		</div>
+				
+	 
+    <div class="col-md-10">
+      <!--Body content-->
+      
+      <ul class="phones">
+        <li ng-repeat="phone in phones | filter:query | orderBy:orderProp" class="thumbnail">
+        	<button type="button" class="btn btn-default  col-lg-1 col-md-1" ng-model="id" ng-click="removePhone(phone.id)" >Remove</button>
+          <a href="#/phones/{{phone.id}}" class="thumb"></a>
+          <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
+          <a href="#/phones/{{phone.id}}">{{phone.desription}}</a>
+          <a href="#/phones/{{phone.id}}">{{phone.year}}</a>
+          
+          <p>{{phone.snippet}}</p>
+          <p>{{phone.imageUrl}}</p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

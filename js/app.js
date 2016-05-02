@@ -1,0 +1,56 @@
+'use strict';
+
+/* App Module */
+
+var phonecatApp = angular.module('phonecatApp', [
+  'ngRoute',
+  'phonecatControllers'
+]);
+
+phonecatApp.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/home', {
+        templateUrl: 'partials/home.html',
+        controller: 'CardsMainCtrl'
+      }).     
+      when('/users', {
+        templateUrl: 'partials/users-list.html',
+        controller: 'UsersListCtrl'
+      }).      
+      when('/users/:phoneId', {
+        templateUrl: 'partials/phone-detail.html',
+        controller: 'UserDetailCtrl'
+      }).
+      when('/addUser', {
+        templateUrl: 'partials/user-add.html',
+        controller: 'UserAddCtrl'
+      }).
+      when('/albums', {
+        templateUrl: 'partials/albums-list.html',
+        controller: 'AlbumsListCtrl'
+      }).
+      when('/addAlbum', {
+        templateUrl: 'partials/album-add.html',
+        controller: 'AlbumAddCtrl'
+      }).             
+      when('/login', {
+        templateUrl: 'partials/user-logIn.html',
+        controller: 'UserAuthCtrl'
+      }).      
+      when('/logout', {
+        templateUrl: 'partials/user-logIn.html',
+        controller: 'UserAuthCtrl'
+      }).
+      when('/usersalbums/:userId', {
+        templateUrl: 'partials/users-album-card.html',
+        controller: 'UserAlbumCardCtrl'
+      }).
+      when('/usersalbums', {
+        templateUrl: 'partials/users-album-card.html',
+        controller: 'UserAlbumCardCtrl'
+      }).      
+      otherwise({
+        redirectTo: '/home'
+      });
+  }]);

@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="row">
+  	<div class="col-md-10">
+    	      <ul class="album">    	      	
+							<p>{{message}}</p>
+					 </ul>
+		</div>
+    <div class="col-md-10">
+      <!--Body content-->
+      
+      <ul class="album">
+        <li ng-repeat="album in albums " class="thumbnail">
+          <p>{{album.id}}</p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

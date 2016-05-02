@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="row">
+   	<div class="col-md-10" >
+				  	<div class="row" >
+					      <ul class="albums">
+					        <li ng-repeat="album in albums | filter:phone.id" class="thumbnail" ng-style= "{'background-color':'green'}">
+				        		<div class=row">
+				        			<div class="col-md-10">
+					        			<a href="" class="thumb">{{album.nomeAlbum}}</a>
+					        			<div clas="row">
+						        			<div class="col-md-3"  >
+		 					        			<button type="button" class="btn btn-default" ng-model="id" ng-click="removeUserAlbum(album.id)" >Remove Album</button>
+		 					        		</div>
+		 					        		<div class="col-md-3" >
+									        	<input ng-model="card" type="text" placeholder="missing cards"  class="form-control" />
+									        </div>
+		 					        		<div class="col-md-2" >
+									        	<button type="button" class="btn btn-default" ng-model="id" ng-click="addMissingCard(album.idUser,album.idAlbum, card, album.id)" >+</button>
+							        		</div>
+							        		<div class="col-md-2" >
+								        		<input type="checkbox" ng-model="checked1" aria-label="Toggle ngHide" >hide missing cards
+								          </div>
+							          </div>
+ 				        			</div>
+				        		</div>
+				        		<div class="row">
+	        	        	<div class="container-fluid col-sm-offset-2" ng-hide="checked1"  >
+	  											<div class="row"> 
+											    	<div class="col-md-10" >
+											      <ul class="albums">
+											        <li ng-repeat="cc in cards | filter:album.id | orderBy:cc.id" class="thumbnail" ng-style= "{'background-color':'red'}">
+											        	<span>
+											        		<button type="button" class="btn btn-default " ng-model="id" ng-click="removeMissingCard(cc.id)" >find!!</button>
+											        		<label col-md-2 >card {{cc.card}}</label>
+											        	</span>
+											        	
+											        </li>
+											      </ul>
+											    </div>
+											  </div>
+											</div>
+										</div>
+					        </li>
+					      </ul>
+					    </div>
+					  </div>
+					</div>
+  </div>
+
