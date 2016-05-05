@@ -42,14 +42,22 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/user-logIn.html',
         controller: 'UserAuthCtrl'
       }).
-      when('/usersalbums/:userId', {
-        templateUrl: 'partials/users-album-card.html',
-        controller: 'UserAlbumCardCtrl'
-      }).
       when('/usersalbums', {
+        templateUrl: 'partials/users-albums.html',
+        controller: 'UserAlbumCtrl'
+      }).
+      when('/usersalbums/:userId', {
+        templateUrl: 'partials/users-albums.html',
+        controller: 'UserAlbumCtrl'
+      }).
+      when('/missing', {
         templateUrl: 'partials/users-album-card.html',
-        controller: 'UserAlbumCardCtrl'
+        controller: 'UserAlbumMissingCardCtrl'
       }).      
+      when('/missing/:albumId', {
+        templateUrl: 'partials/users-album-card.html',
+        controller: 'UserAlbumMissingCardCtrl'
+      }).          
       otherwise({
         redirectTo: '/home'
       });
