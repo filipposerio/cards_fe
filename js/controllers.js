@@ -10,8 +10,8 @@ phonecatControllers.controller('CardsMainCtrl', [ '$scope',
     	console.log("OK MAIN CONTROLLER");
     	$scope.message = 'Easy way to complete your sticker album!!';
       
-    	//localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
-    	localStorage.setItem("beServer",'localhost:1337');
+    	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
+    	//localStorage.setItem("beServer",'localhost:1337');
   }]);
   
   
