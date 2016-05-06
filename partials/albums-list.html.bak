@@ -1,13 +1,9 @@
 <div class="container-fluid">
   <div class="row">
-
-  
-
-				
 		<div class="col-md-10">
      	<ul class="albums">
         <li ng-repeat="album in albums | filter:query | orderBy:orderProp" class="thumbnail">
-        <span><a href="#/missing/{{album.id}}">{{album.name}} {{album.usrerown.email}} </a></span>
+        <span><a href="#/missing/{{album.id}}">{{album.name}} {{album.userown.email}} </a></span>
         </li>
       </ul>
 		</div>
