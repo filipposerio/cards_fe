@@ -7,11 +7,12 @@ var phonecatControllers = angular.module('phonecatControllers', []);
 
 phonecatControllers.controller('CardsMainCtrl', [ '$scope',
    function($scope) {
-    	console.log("OK MAIN CONTROLLER");
+    	
     	$scope.message = 'Easy way to complete your sticker album!!';
       
     	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
     	//localStorage.setItem("beServer",'localhost:1337');
+    	console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer"));
   }]);
   
   
@@ -91,12 +92,13 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
 phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$window','$routeParams',
   function($scope, $http, $window,$routeParams) {
   	console.log("OK usersalbumcard controller************************************");
+  	$scope.textdescription = '';
   	console.log($routeParams.albumId);
     //$http.get('http:\\fscardsbe.herokuapp.com/users -H "Authorization: Bearer " + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU3MWQxZDQ2NGYyYzYxZDAwZGExZWQ1ZiIsImlhdCI6MTQ2MTY1ODgzNiwiZXhwIjoxNDYxNjY5NjM2fQ.VG8m5u82XcrgI2ThxcjAi9NKMlF3I8LcTG7CQJ-fjAM' +'"').success(function(data) {
 		console.log(localStorage.getItem("token"));
 		console.log("albumcard="+$routeParams.albumId);
 		console.log(localStorage.getItem("beServer"));
-    $http.get('http://'+localStorage.getItem("beServer")+'/missingcards?albumcard='+$routeParams.albumId).then(function successCallback(response) {
+    $http.get('http://'+localStorage.getItem("beServer")+'/missingcards?albumcard='+$routeParams.albumId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
 				console.log("OK elenco cards mancanti caricato");
 				$scope.cards = response.data;
 				console.log(response.data);
@@ -112,7 +114,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 		console.log(card);
 		console.log(textdescription);
 		console.log($routeParams.albumId);
-  	//$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
 	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/create?card='+card+'&textdescription='+textdescription+'&albumcard='+$routeParams.albumId).then(function successCallback(response) {
 	    									console.log("OK missing-cards added");
 	      								//$scope.cards = response.data;
@@ -130,7 +132,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	  console.log("OK users add FIND cards");
 		console.log("cardId :" + cardId);
 		console.log("albumId. " + $routeParams.albumId);
-  	//$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
 	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/update/'+cardId+'?foundby='+localStorage.getItem("usr")).then(function successCallback(response) {
 	    									console.log("OK missing-cards FOUND!!!!!!");
 	      								//$scope.cards = response.data;
@@ -177,12 +179,12 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
   	localStorage.setItem("usremail","");
   	localStorage.setItem("admin","");
   	$scope.logInUser = function () {
-  		console.log("OK user authorization controller");
+  		console.log("OK user authorization controller vrifica token");
 
        console.log($scope.userEmail);
        console.log($scope.userPassword);
        
-       
+       console.log(localStorage.getItem("token"));
         $http.get('http://'+localStorage.getItem("beServer")+'/auth?email='+$scope.userEmail+'&password='+$scope.userPassword).then(function successCallback(response) {
                     $scope.users = response.data
                     
@@ -218,7 +220,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
        console.log($scope.userPassword);
        console.log($scope.userConfirmPassword);
        
-        $http.post('http://'+localStorage.getItem("beServer")+'/users/create?email='+$scope.userEmail+'&password='+$scope.userPassword+'&confirmPassword='+$scope.userConfirmPassword).then(function successCallback(response) {
+        $http.post('http://'+localStorage.getItem("beServer")+'/users/create?email='+$scope.userEmail+'&password='+$scope.userPassword+'&confirmPassword='+$scope.userConfirmPassword, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
                     $scope.users = response.data
                     
                     $scope.userEmail ="";
@@ -259,7 +261,7 @@ phonecatControllers.controller('AlbumsListCtrl', ['$scope', '$http','$window',
     	 if (deleteUser) {
     	 	console.log("conferma da parte dell'utente della cancellazione id = "+ phoneId);
     	 	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
-    	 	$http.post('http://fscardsbe.herokuapp.com/albums/destroy?id='+phoneId).then(function successCallback(response) {
+    	 	$http.post('http://'+localStorage.getItem("beServer")+'/albums/destroy?id='+phoneId).then(function successCallback(response) {
     									console.log("OK");
       								//	$scope.phones = response.data;
       								// ricarico elenco

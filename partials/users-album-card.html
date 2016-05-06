@@ -1,29 +1,23 @@
 <div class="container-fluid">
-  <div class="row">
-  	<div class="col-md-5" >
-  		<p>add missing card</p>
-
-  	</div>
-  </div>
-
-  <div class="row">
-   	<div class="col-md-10" >
-				  	 <div class="row">
-											      <ul class="cards">
-											      	<span >
-     														<input ng-model="card" type="text" placeholder="n. missing cards" " required autofocus  	>
-     														<input ng-model="textdescription" type="text" placeholder="description" " >
-     														<button type="button" class="btn btn-link " ng-model="id" ng-click="addMissingCard(card, textdescription)" >add missing card</button></span>
-			   													
+  <form class="form_phone" name="formPhone">
+	  <div class="row">
+	   	<div class="col-md-10" >
+					  	 <div class="row">
+												      <ul class="cards">
+													      	<span >
+		     														<input type="text"  ng-model="card"            class="form-control"  placeholder="n. missing cards"  ng-required="true"/>
+		     														<input type="text"  ng-model="textdescription"  class="form-control"  placeholder="dsdsdsdescription"  />
+		     														<button  class="btn btn-default"  ng-click="formPhone.$valid && addMissingCard(card, textdescription)" >Add missing card</button>
+		     													</span>
 													        <li ng-repeat="cc in cards | orderBy:cc.textdescription" class="thumbnail">
-   													        	<button type="button" class="btn btn-danger btn-sm" ng-model="id" ng-click="removeMissingCard(cc.id)" >remove</button>
+	 													        	<button type="button" class="btn btn-danger btn-sm" ng-model="id" ng-click="removeMissingCard(cc.id)" >remove</button>
 													        		<button type="button" class="btn btn-success btn-sm" ng-model="id" ng-click="findMissingCard(cc.id)" >found it!</button>
 													        		<span>N.{{cc.card}}</span>  <span>{{cc.textdescription}}</span><span class="label label-pill label-success">{{cc.foundby.email}}</span>
 													        </li>
-												        </div>
-											      </ul>
-						 </div>
-					  </div>
-					</div>
+												      </ul>
+							 </div>
+			</div>
+		</div>
+	</form>
 </div>
 
