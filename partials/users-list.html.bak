@@ -1,14 +1,5 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-10">
-      <!--Sidebar content-->
-      Search: <input ng-model="query">
-      Sort by:
-      <select ng-model="orderProp">
-        <option value="email">Alphabetical</option>
-      </select>
-    </div>
-  </div>
+
   <div class="row">  
 		<div class="col-md-10">
     <div class="row">

@@ -9,10 +9,13 @@ phonecatControllers.controller('CardsMainCtrl', [ '$scope',
    function($scope) {
     	
     	$scope.message = 'Easy way to complete your sticker album!!';
+    	
+    	$scope.userLogIn = localStorage.getItem("usremail");
       
-    	//localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
-    	localStorage.setItem("beServer",'localhost:1337');
-    	console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer"));
+    	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
+    	//localStorage.setItem("beServer",'localhost:1337');
+    	console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer") + "utente collegato:" + localStorage.getItem("usremail"));
+
   }]);
   
   
@@ -21,7 +24,7 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
   	console.log("OK users list controller");
 		console.log(localStorage.getItem("token"));
 		//var beServer = 'fscardsbe.herokuapp.com';
-		
+		$scope.userLogIn = localStorage.getItem("usremail");
 		//beServer = 'localhost:1337';
     $http.get('http://'+localStorage.getItem("beServer")+'/users', { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
     									console.log("OK elenco caricato");
@@ -69,8 +72,9 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
   	console.log("OK usersalbumcard controller************************************");
   	console.log($routeParams.userId);
 		console.log(localStorage.getItem("token"));
-		
+		$scope.userLogIn = localStorage.getItem("usremail");
 		console.log("userown="+$routeParams.userId);
+		localStorage.setItem("userown",$routeParams.userId);
 		//console.log();
 		
     $http.get('http://'+localStorage.getItem("beServer")+'/albums?userown='+$routeParams.userId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
@@ -94,11 +98,27 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
   	console.log("OK usersalbumcard controller************************************");
   	$scope.textdescription = '';
   	console.log($routeParams.albumId);
+//    localStorage.setItem("album",$routeParams.albumId.);
     //$http.get('http:\\fscardsbe.herokuapp.com/users -H "Authorization: Bearer " + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU3MWQxZDQ2NGYyYzYxZDAwZGExZWQ1ZiIsImlhdCI6MTQ2MTY1ODgzNiwiZXhwIjoxNDYxNjY5NjM2fQ.VG8m5u82XcrgI2ThxcjAi9NKMlF3I8LcTG7CQJ-fjAM' +'"').success(function(data) {
 		console.log(localStorage.getItem("token"));
 		console.log("albumcard="+$routeParams.albumId);
+		console.log("albumcard="+$routeParams.albumId.name);		
 		console.log(localStorage.getItem("beServer"));
+		$scope.userLogIn = localStorage.getItem("usremail");
+		
+  	if (localStorage.getItem("usr") !=  localStorage.getItem("userown")) {
+  		console.log("sono diversi, spengo bottone remove");
+  		$scope.owner = 0;
+  	}
+  	else {
+  		console.log("sono uguali,accendo bottone remove");
+  		$scope.owner= 1;
+  	}		
     $http.get('http://'+localStorage.getItem("beServer")+'/missingcards?albumcard='+$routeParams.albumId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
+				console.log("OK elenco cards mancanti caricato");
+				console.log(localStorage.getItem("usr"));
+				console.log(localStorage.getItem("usremail"));
+				console.log(localStorage.getItem("albumId"));
 				console.log("OK elenco cards mancanti caricato");
 				function sortNumber(a,b) {
 		    	return a.card - b.card;
@@ -109,6 +129,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 				$scope.cards.sort(sortNumber);
 				console.log(response.data);
 				console.log(response.data[0]);
+				console.log(response.data[0].albumcard.name);
    			console.log(response.data.length);
 		}, function errorCallback(response) {
 				console.log("errore");
@@ -122,19 +143,30 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 		console.log(card);
 		console.log(textdescription);
 		console.log($routeParams.albumId);
+		var cardarray = [];
+		cardarray = card.split(",");
+		var i;
+		console.log(cardarray)
+		console.log(cardarray.length)
+		
+	for (i=0; i<(cardarray.length); i++) {
+			console.log('inserisco card number:' + cardarray[i]);
   	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
-	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/create?card='+card+'&textdescription='+textdescription+'&albumcard='+$routeParams.albumId).then(function successCallback(response) {
+	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/create?card='+cardarray[i]+'&textdescription='+textdescription+'&albumcard='+$routeParams.albumId).then(function successCallback(response) {
 	    									console.log("OK missing-cards added");
 	      								//$scope.cards = response.data;
 	      								console.log(response.data);
-	      								$window.location.href = '#missing/'+response.data.albumcard;
+	      								//$window.location.href = '#missing/'+response.data.albumcard;
 		}, function errorCallback(response) {
-	    									console.log("errore");
+	    									console.log("errore insert card ");
 	    									console.log(response.statusText);
 	      								$scope.cards = "";
 	      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
 	      								$window.location.href = '#login';
 	  });
+	  $window.location.href = '#missing/'+$routeParams.albumId;
+	}
+	  
     },
     $scope.findMissingCard = function (cardId) {
 	  console.log("OK users add FIND cards");
@@ -175,7 +207,20 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
 	      								$window.location.href = '#login';
 	  });
-    } 
+    }
+    $scope.isOwner = function (albumId){
+    	console.log("identifico owner album e confronto con utente collegato");
+    	console.log('utente connesso:' + localStorage.getItem("usr"));
+    	console.log('utente proprietario album:' + localStorage.getItem("userown"));
+    	if (localStorage.getItem("usr") !=  localStorage.getItem("userown")) {
+    		console.log("sono diversi, spengo bottone remove");
+    		$scope.owner = 0;
+    	}
+    	else {
+    		console.log("sono uguali,accendo bottone remove");
+    		$scope.owner= 0;
+    	}
+    }
   }]);
 
 
@@ -185,6 +230,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
   	localStorage.setItem("token","");
   	localStorage.setItem("usr","");
   	localStorage.setItem("usremail","");
+  	localStorage.setItem("userLogIn","");
   	localStorage.setItem("admin","");
   	$scope.logInUser = function () {
   		console.log("OK user authorization controller vrifica token");
@@ -252,9 +298,11 @@ phonecatControllers.controller('AlbumsListCtrl', ['$scope', '$http','$window',
   function($scope, $http, $window) {
   	console.log("OK albums list controller");
 		console.log(localStorage.getItem("token"));
+		$scope.userLogIn = localStorage.getItem("usremail");
     $http.get('http://'+localStorage.getItem("beServer")+'/albums', { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
     									console.log("OK elenco caricato");
       								$scope.albums = response.data;
+      								
 	  }, function errorCallback(response) {
     									console.log("errore album list");
     									console.log(response.statusText);

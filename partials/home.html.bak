@@ -1,5 +1,7 @@
-<div >
-	<h1>Missing Cards!!!!!</h1>
-	
-	<p>{{ message }}</p>
-</div>
+  <nav class="navbar">
+    <div class="container">
+    	<ul class="nav navbar-nav navbar-right" >
+    	{{userLogIn}}
+     </ul>
+    </div>
+  </nav>

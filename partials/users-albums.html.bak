@@ -5,8 +5,6 @@
 											      <ul class="albums">
 											        <li ng-repeat="cc in albums | orderBy:cc.id" class="thumbnail">
 											        	<span>
-											        		
-											        		
 											        		<a href="#/missing/{{cc.id}}">{{cc.name}}</a>
 											        	</span>
 											        </li>

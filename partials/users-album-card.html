@@ -1,5 +1,13 @@
 <div class="container-fluid">
+	  <nav class="navbar">
+    <div class="container">
+    	<ul class="nav navbar-nav navbar-right" >
+    	[{{albumsel}}] - [{{userLogIn}}]
+     </ul>
+    </div>
+  </nav>
   <form class="form_phone" name="formPhone">
+  	
 	  <div class="row">
 	   	<div class="col-md-10" >
 					  	 <div class="row">
@@ -11,10 +19,10 @@
 		     													</span>
 													        <li ng-repeat="cc in cards | orderBy:'cc.card':reverse track by $index" class="thumbnail" >
 													        		{{$index}}
-	 													        	<button type="button" class="btn btn-danger btn-sm" ng-model="id" ng-click="removeMissingCard(cc.id)" >remove</button>
+	 													        	<button type="button" class="btn btn-danger btn-sm" ng-model="id" ng-click="removeMissingCard(cc.id)" ng-show={{owner}} >remove</button>
 													        		<button type="button" class="btn btn-success btn-sm" ng-model="id" ng-click="findMissingCard(cc.id)" >found it!</button>
 													        		<span> N.{{cc.card}}</span>  <span>{{cc.textdescription}}</span><span class="label label-pill label-success">{{cc.foundby.email}}</span>
-													        		<a href="" ng-click="itemNext()">next</a>
+													        		
 													        </li>
 												      </ul>
 							 </div>

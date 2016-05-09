@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="phonecatApp">
+<html lang="en" ng-app="phonecatApp" ng-controller="CardsIndexCtrl">
 <head>
   <meta charset="utf-8">
   <title>Missing cards </title>
@@ -16,19 +16,20 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Missing cards </a>
       </div>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" >
         <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
         <li><a href="#users"><i class="fa fa-shield"></i>Users</a></li>
         <!--li><a href="#usersalbums"><i class="fa fa-shield"></i>My Albums</a></li-->
         <li><a href="#albums"><i class="fa fa-shield"></i> Albums</a></li>
         <li><a href="#addUser"><i class="fa fa-comment"></i>SigUp</a></li>
-        <li><a href="#login"><i class="fa fa-comment"></i>LogIn</a></li>
+        <li><a href="#login"><i class="fa fa-comment"></i>SigIn</a></li>
         <li><a href="#logout"><i class="fa fa-comment"></i>LogOut</a></li>
-        
-        
       </ul>
     </div>
   </nav>
+
+
+
   <div ng-view></div>
 
 </body>
