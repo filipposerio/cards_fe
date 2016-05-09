@@ -72,7 +72,8 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
   	console.log("OK usersalbumcard controller************************************");
   	console.log($routeParams.userId);
 		console.log(localStorage.getItem("token"));
-		$scope.userLogIn = localStorage.getItem("usremail");
+		//$scope.userLogIn = localStorage.getItem("usremail");
+		$scope.userLogIn = $routeParams.userId;
 		console.log("userown="+$routeParams.userId);
 		localStorage.setItem("userown",$routeParams.userId);
 		//console.log();

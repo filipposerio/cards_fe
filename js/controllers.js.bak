@@ -101,8 +101,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 //    localStorage.setItem("album",$routeParams.albumId.);
     //$http.get('http:\\fscardsbe.herokuapp.com/users -H "Authorization: Bearer " + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU3MWQxZDQ2NGYyYzYxZDAwZGExZWQ1ZiIsImlhdCI6MTQ2MTY1ODgzNiwiZXhwIjoxNDYxNjY5NjM2fQ.VG8m5u82XcrgI2ThxcjAi9NKMlF3I8LcTG7CQJ-fjAM' +'"').success(function(data) {
 		console.log(localStorage.getItem("token"));
-		console.log("albumcard="+$routeParams.albumId);
-		console.log("albumcard="+$routeParams.albumId.name);		
+		console.log("albumcard="+$routeParams.albumId);		
 		console.log(localStorage.getItem("beServer"));
 		$scope.userLogIn = localStorage.getItem("usremail");
 		
@@ -129,7 +128,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 				$scope.cards.sort(sortNumber);
 				console.log(response.data);
 				console.log(response.data[0]);
-				console.log(response.data[0].albumcard.name);
+				$scope.albumsel = response.data[0].albumcard.name;
    			console.log(response.data.length);
 		}, function errorCallback(response) {
 				console.log("errore");
