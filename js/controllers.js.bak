@@ -100,8 +100,16 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 		console.log(localStorage.getItem("beServer"));
     $http.get('http://'+localStorage.getItem("beServer")+'/missingcards?albumcard='+$routeParams.albumId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
 				console.log("OK elenco cards mancanti caricato");
+				function sortNumber(a,b) {
+		    	return a.card - b.card;
+				};
+		  	var i;
+    		console.log('array: ');
 				$scope.cards = response.data;
+				$scope.cards.sort(sortNumber);
 				console.log(response.data);
+				console.log(response.data[0]);
+   			console.log(response.data.length);
 		}, function errorCallback(response) {
 				console.log("errore");
 				console.log(response.statusText);
@@ -151,7 +159,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	  console.log("OK users REMOVE missing cards");
 		console.log(cardId);
 		console.log($routeParams.albumId);
-  	//$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
 	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/destroy?id='+cardId).then(function successCallback(response) {
 	    									console.log("OK removed");
 	      								//$scope.cards = response.data;

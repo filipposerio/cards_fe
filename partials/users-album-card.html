@@ -9,10 +9,12 @@
 		     														<input type="text"  ng-model="textdescription"  class="form-control"  placeholder="dsdsdsdescription"  />
 		     														<button  class="btn btn-default"  ng-click="formPhone.$valid && addMissingCard(card, textdescription)" >Add missing card</button>
 		     													</span>
-													        <li ng-repeat="cc in cards | orderBy:cc.textdescription" class="thumbnail">
+													        <li ng-repeat="cc in cards | orderBy:'cc.card':reverse track by $index" class="thumbnail" >
+													        		{{$index}}
 	 													        	<button type="button" class="btn btn-danger btn-sm" ng-model="id" ng-click="removeMissingCard(cc.id)" >remove</button>
 													        		<button type="button" class="btn btn-success btn-sm" ng-model="id" ng-click="findMissingCard(cc.id)" >found it!</button>
-													        		<span>N.{{cc.card}}</span>  <span>{{cc.textdescription}}</span><span class="label label-pill label-success">{{cc.foundby.email}}</span>
+													        		<span> N.{{cc.card}}</span>  <span>{{cc.textdescription}}</span><span class="label label-pill label-success">{{cc.foundby.email}}</span>
+													        		<a href="" ng-click="itemNext()">next</a>
 													        </li>
 												      </ul>
 							 </div>
