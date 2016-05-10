@@ -226,49 +226,55 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	  console.log("OK users add FIND cards");
 		console.log("cardId :" + cardId);
 		console.log("albumId. " + $routeParams.albumId);
-  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
-	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/update/'+cardId+'?foundby='+localStorage.getItem("usr")).then(function successCallback(response) {
-	    									console.log("OK missing-cards FOUND!!!!!!");
-	      								//$scope.cards = response.data;
-	      								console.log(response.data);
-	      								console.log(response.data.albumcard.id);
-	      								//send messages to user album 
-	      								console.log("send message. ricarica album con id:" + response.data.albumcard.id);	      									
-	      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card N. '+ response.data.card +' for you!').then(function successCallback(response) {
-	      									console.log("ok send message. ricarica album con id:" + response.data.albumcard);	      									
-	      									$window.location.href = '#missing/'+response.data.albumcard;
-	      								}, function errorCallback(response) {
-	      									console.log("errore invio messaggio");
-	      									$window.location.href = '#login';
-	      								});
-		}, function errorCallback(response) {
-	    									console.log("errore");
-	    									console.log(response.statusText);
-	      								$scope.cards = "";
-	      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
-	      								$window.location.href = '#login';
-	  });
+		var findCard = $window.confirm('Are you sure you found the card?');
+	  	if (findCard) {
+			  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+				  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/update/'+cardId+'?foundby='+localStorage.getItem("usr")).then(function successCallback(response) {
+				    									console.log("OK missing-cards FOUND!!!!!!");
+				      								//$scope.cards = response.data;
+				      								console.log(response.data);
+				      								console.log(response.data.albumcard.id);
+				      								//send messages to user album 
+				      								console.log("send message. ricarica album con id:" + response.data.albumcard.id);	      									
+				      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card N. '+ response.data.card +' for you!').then(function successCallback(response) {
+				      									console.log("ok send message. ricarica album con id:" + response.data.albumcard);	      									
+				      									$window.location.href = '#missing/'+response.data.albumcard;
+				      								}, function errorCallback(response) {
+				      									console.log("errore invio messaggio");
+				      									$window.location.href = '#login';
+				      								});
+					}, function errorCallback(response) {
+				    									console.log("errore");
+				    									console.log(response.statusText);
+				      								$scope.cards = "";
+				      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
+				      								$window.location.href = '#login';
+				  });
+			}
     }
     $scope.removeMissingCard = function (cardId) {
 	  console.log("OK users REMOVE missing cards");
 		console.log(cardId);
 		console.log($routeParams.albumId);
-  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
-	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/destroy?id='+cardId).then(function successCallback(response) {
-	    									console.log("OK removed");
-	      								//$scope.cards = response.data;
-	      								console.log(response.data);
-	      								console.log(response.data.albumcard);
-	      								console.log(response.data.albumcard.id);
-	      								console.log("OK remove card- ricarico elenco");
-	      								$window.location.href = '#missing/'+response.data.albumcard.id;
-		}, function errorCallback(response) {
-	    									console.log("errore");
-	    									console.log(response.statusText);
-	      								$scope.cards = "";
-	      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
-	      								$window.location.href = '#login';
-	  });
+		var deleteCard = $window.confirm('Are you sure?');
+			  if (deleteCard) {
+		  	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+			  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/destroy?id='+cardId).then(function successCallback(response) {
+			    									console.log("OK removed");
+			      								//$scope.cards = response.data;
+			      								console.log(response.data);
+			      								console.log(response.data.albumcard);
+			      								console.log(response.data.albumcard.id);
+			      								console.log("OK remove card- ricarico elenco");
+			      								$window.location.href = '#missing/'+response.data.albumcard.id;
+				}, function errorCallback(response) {
+			    									console.log("errore");
+			    									console.log(response.statusText);
+			      								$scope.cards = "";
+			      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
+			      								$window.location.href = '#login';
+			  });
+				}
     }
     $scope.isOwner = function (albumId){
     	console.log("identifico owner album e confronto con utente collegato");
