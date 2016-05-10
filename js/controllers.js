@@ -285,8 +285,8 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 
   phonecatControllers.controller('UserAuthCtrl', ['$scope', '$routeParams', '$http','$window',
   function($scope, $routeParams, $http,$window) {
-  	//localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
-    localStorage.setItem("beServer",'localhost:1337');
+  	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
+    //localStorage.setItem("beServer",'localhost:1337');
     console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer"));
 
 

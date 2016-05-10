@@ -231,7 +231,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	      								console.log(response.data.albumcard.id);
 	      								//send messages to user album 
 	      								console.log("send message. ricarica album con id:" + response.data.albumcard.id);	      									
-	      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card n.'+ response.data.card +' for you!').then(function successCallback(response) {
+	      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card N. '+ response.data.card +' for you!').then(function successCallback(response) {
 	      									console.log("ok send message. ricarica album con id:" + response.data.albumcard);	      									
 	      									$window.location.href = '#missing/'+response.data.albumcard;
 	      								}, function errorCallback(response) {
