@@ -10,6 +10,9 @@
 		<div class="col-md-10">
     <div class="row">
       <ul class="users">
+      	<li class="thumbnail">
+					<span class="label label-pill label-warning" >Users</span>
+				</li>
         <li ng-repeat="user in users | filter:query | orderBy:orderProp" class="thumbnail"  >
         	<span>
           <a href="#/usersalbums/{{user.id}}">{{user.email}}</a></span>

@@ -166,11 +166,14 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
   	}		
     $http.get('http://'+localStorage.getItem("beServer")+'/missingcards?albumcard='+$routeParams.albumId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
 				console.log("OK elenco cards mancanti caricato");
-				console.log("idutente: " +localStorage.getItem("usr"));
-				console.log("useremail: "+localStorage.getItem("usremail"));
-				console.log("userown: " +localStorage.getItem("userown"));
-				console.log("albumid: " +localStorage.getItem("albumId"));
-				console.log("OK elenco cards mancanti caricato");
+				//console.log("idutente: " +localStorage.getItem("usr"));
+				//console.log("useremail: "+localStorage.getItem("usremail"));
+				//$scope.userown = localStorage.getItem("userown");
+				//$scope.userown=response.data[0].albumcard.userown.email;
+				//localStorage.getItem("userown") = $scope.userown
+				//console.log("DOPO CARICAMENTO ELENCO userown: " +$scope.userown);
+				//console.log("albumid: " +localStorage.getItem("albumId"));
+				//console.log("OK elenco cards mancanti caricato");
 				function sortNumber(a,b) {
 		    	return a.card - b.card;
 				};

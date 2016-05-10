@@ -168,7 +168,11 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 				console.log("OK elenco cards mancanti caricato");
 				console.log("idutente: " +localStorage.getItem("usr"));
 				console.log("useremail: "+localStorage.getItem("usremail"));
-				console.log("userown: " +localStorage.getItem("userown"));
+				
+				//$scope.userown = localStorage.getItem("userown");
+				$scope.userown=response.data[0].albumcard.userown.email;
+				//localStorage.getItem("userown") = $scope.userown
+				console.log("DOPO CARICAMENTO ELENCO userown: " +$scope.userown);
 				console.log("albumid: " +localStorage.getItem("albumId"));
 				console.log("OK elenco cards mancanti caricato");
 				function sortNumber(a,b) {
@@ -285,8 +289,8 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 
   phonecatControllers.controller('UserAuthCtrl', ['$scope', '$routeParams', '$http','$window',
   function($scope, $routeParams, $http,$window) {
-  	//localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
-    localStorage.setItem("beServer",'localhost:1337');
+  	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
+    //localStorage.setItem("beServer",'localhost:1337');
     console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer"));
 
 
