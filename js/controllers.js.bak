@@ -5,16 +5,51 @@
 var phonecatControllers = angular.module('phonecatControllers', []);
 
 
-phonecatControllers.controller('CardsMainCtrl', [ '$scope',
-   function($scope) {
+phonecatControllers.controller('CardsMainCtrl', [ '$scope','$http','$window',
+   function($scope, $http,$window) {
     	
-    	$scope.message = 'Easy way to complete your sticker album!!';
+    	
     	
     	$scope.userLogIn = localStorage.getItem("usremail");
       
-    	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
-    	//localStorage.setItem("beServer",'localhost:1337');
+    	//localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
+    	localStorage.setItem("beServer",'localhost:1337');
     	console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer") + "utente collegato:" + localStorage.getItem("usremail"));
+    	console.log("OK MAIN CONTROLLER - load last messges per "+localStorage.getItem("usr") );
+      $http.get('http://'+localStorage.getItem("beServer")+'/cardmessages?userTo='+localStorage.getItem("usr") , { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
+      								console.log("OK elenco messaggi caricato");
+      								$scope.msgs = response.data;
+      								//carico gli album associati
+	  	}, function errorCallback(response) {
+    									console.log("errore caricamento messaggi");
+    									console.log(response.statusText);
+      								$scope.msgs = "";
+      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
+      								$window.location.href = '#login';
+  		});
+	    $scope.removeMsg= function (msgId) {
+	    	console.log("OK msg remove controller; cancello id = "+ msgId);
+	    	var deleteMsg = $window.confirm('Are you sure?');
+	    	 if (deleteMsg) {
+	    	 	console.log("conferma da parte dell'utente della cancellazione msg = "+ msgId);
+	    	 	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+	    	 	$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/destroy?id='+msgId).then(function successCallback(response) {
+	    									console.log("OK eliminazione");
+	      								//	$scope.phones = response.data;
+	      								// ricarico elenco
+	      								$window.location.href = '#home';
+		  		}, function errorCallback(response) {
+	    									console.log("errore cancellazione msg");
+	    									console.log(response.statusText);
+	    									console.log(response.data.summary);
+	    									console.log("verifica token");
+	    									console.log(localStorage.getItem("token"));
+	      								$scope.users = "";
+	      								// ricarico elenco
+	      								$window.location.href = '#home';
+	  			});
+	       }
+	  	}
 
   }]);
   
@@ -41,11 +76,11 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
       								$window.location.href = '#login';
   	});
     $scope.orderProp = 'age';
-    $scope.removeUser = function (userId) {
+    $scope.removeUser= function (userId) {
     	console.log("OK users remove controller; cancello id = "+ userId);
-    	var deleteUser = $window.confirm('Are you absolutely sure you want to delete?');
+    	var deleteUser = $window.confirm('Are you sure?');
     	 if (deleteUser) {
-    	 	console.log("conferma da parte dell'utente della cancellazione id = "+ userId);
+    	 	console.log("conferma da parte dell'utente della cancellazione utente = "+ userId);
     	 	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
     	 	$http.post('http://'+localStorage.getItem("beServer")+'/users/destroy?id='+userId).then(function successCallback(response) {
     									console.log("OK eliminazione");
@@ -53,14 +88,14 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
       								// ricarico elenco
       								$window.location.href = '#users';
 	  		}, function errorCallback(response) {
-    									console.log("errore cancellazione");
+    									console.log("errore cancellazione msg");
     									console.log(response.statusText);
     									console.log(response.data.summary);
     									console.log("verifica token");
     									console.log(localStorage.getItem("token"));
       								$scope.users = "";
       								// ricarico elenco
-      								$window.location.href = '#users';
+      								$window.location.href = '#login';
   			});
        }
   	}
@@ -72,15 +107,20 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
   	console.log("OK usersalbumcard controller************************************");
   	console.log($routeParams.userId);
 		console.log(localStorage.getItem("token"));
+		//$scope.userLogIn = localStorage.getItem("usremail");
 		$scope.userLogIn = localStorage.getItem("usremail");
 		console.log("userown="+$routeParams.userId);
-		localStorage.setItem("userown",$routeParams.userId);
+		
 		//console.log();
 		
     $http.get('http://'+localStorage.getItem("beServer")+'/albums?userown='+$routeParams.userId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
-					console.log("OK elenco album utente caricato");
+					console.log("OK elenco album utente caricato stampo utente owner degli album");
 					console.log(response.data);
 					$scope.albums = response.data;
+					localStorage.setItem("iduserown",response.data[0].userown.id);
+					localStorage.setItem("userown",response.data[0].userown.email);
+					$scope.userown = response.data[0].userown.email;
+					console.log(response.data[0].userown);
 		}, function errorCallback(response) {
 				console.log("errore");
 				console.log(response.statusText);
@@ -95,7 +135,7 @@ phonecatControllers.controller('UsersListCtrl', ['$scope', '$http','$window',
   
 phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$window','$routeParams',
   function($scope, $http, $window,$routeParams) {
-  	console.log("OK usersalbumcard controller************************************");
+  	console.log("OK usersalbumcard controller. ");
   	$scope.textdescription = '';
   	console.log($routeParams.albumId);
 //    localStorage.setItem("album",$routeParams.albumId.);
@@ -104,8 +144,16 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 		console.log("albumcard="+$routeParams.albumId);		
 		console.log(localStorage.getItem("beServer"));
 		$scope.userLogIn = localStorage.getItem("usremail");
-		
-  	if (localStorage.getItem("usr") !=  localStorage.getItem("userown")) {
+		$scope.userown = localStorage.getItem("userown");
+		$scope.userId = localStorage.getItem("iduserown");
+		$scope.albumId = $routeParams.albumId;
+		console.log("OK usersalbumcard controller. verifico utente collegato/utente proprietario album");
+		console.log("idutente: " +localStorage.getItem("usr"));
+		console.log("useremail: "+localStorage.getItem("usremail"));
+		console.log("iduserown: " +localStorage.getItem("iduserown"));
+		console.log("userown: " +localStorage.getItem("userown"));
+		console.log("albumid: " +localStorage.getItem("albumId"));		
+  	if (localStorage.getItem("usr") !=  localStorage.getItem("iduserown")) {
   		console.log("sono diversi, spengo bottone remove");
   		$scope.owner = 0;
   	}
@@ -115,9 +163,10 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
   	}		
     $http.get('http://'+localStorage.getItem("beServer")+'/missingcards?albumcard='+$routeParams.albumId, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
 				console.log("OK elenco cards mancanti caricato");
-				console.log(localStorage.getItem("usr"));
-				console.log(localStorage.getItem("usremail"));
-				console.log(localStorage.getItem("albumId"));
+				console.log("idutente: " +localStorage.getItem("usr"));
+				console.log("useremail: "+localStorage.getItem("usremail"));
+				console.log("userown: " +localStorage.getItem("userown"));
+				console.log("albumid: " +localStorage.getItem("albumId"));
 				console.log("OK elenco cards mancanti caricato");
 				function sortNumber(a,b) {
 		    	return a.card - b.card;
@@ -177,7 +226,15 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	      								//$scope.cards = response.data;
 	      								console.log(response.data);
 	      								console.log(response.data.albumcard.id);
-	      								$window.location.href = '#missing/'+response.data.albumcard.id;
+	      								//send messages to user album 
+	      								console.log("send message. ricarica album con id:" + response.data.albumcard.id);	      									
+	      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card n.'+ response.data.card +' for you!').then(function successCallback(response) {
+	      									console.log("ok send message. ricarica album con id:" + response.data.albumcard);	      									
+	      									$window.location.href = '#missing/'+response.data.albumcard;
+	      								}, function errorCallback(response) {
+	      									console.log("errore invio messaggio");
+	      									$window.location.href = '#login';
+	      								});
 		}, function errorCallback(response) {
 	    									console.log("errore");
 	    									console.log(response.statusText);

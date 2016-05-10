@@ -5,11 +5,14 @@
     	{{userLogIn}}
      </ul>
     </div>
-  </nav>	
+  </nav>
   <div class="row">
    	<div class="col-md-10" >
 				  	 <div class="row">
 											      <ul class="albums">
+											      	<li class="thumbnail">
+											      		<span class="label label-pill label-warning" >ALbums for {{userown}}</span>
+											      	</li>
 											        <li ng-repeat="cc in albums | orderBy:cc.id" class="thumbnail">
 											        	<span>
 											        		<a href="#/missing/{{cc.id}}">{{cc.name}}</a>

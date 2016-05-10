@@ -1,7 +1,42 @@
-  <nav class="navbar">
+<div class="container-fluid">
+  <span><nav class="navbar ">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"></a>
+      </div>
+      <ul class="nav navbar-nav navbar-right" >
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#users"><i class="fa fa-shield"></i>Users</a></li>
+        <!--li><a href="#usersalbums"><i class="fa fa-shield"></i>My Albums</a></li-->
+        <li><a href="#albums"><i class="fa fa-shield"></i> Albums</a></li>
+      </ul>
+    </div>
+  </nav></span>  
+  <span><nav class="navbar">
     <div class="container">
     	<ul class="nav navbar-nav navbar-right" >
     	{{userLogIn}}
      </ul>
     </div>
   </nav>
+  </span>
+  {{message}}
+  		
+  <div class="row">
+   	<div class="col-md-10" >
+				  	 <div class="row">
+											      <ul class="msgs">
+											      	<li class="thumbnail">
+											      		<span class="label label-pill label-warning" >Messages for {{userLogIn}}</span>
+											      	</li>
+											        <li ng-repeat="msg in msgs"  class="thumbnail">
+											        	<span><button type="button" class="btn btn-danger btn-xs" ng-model="id" ng-click="removeMsg(msg.id)" >clear msg</button></span>
+											        	<span class="label label-pill label-warning" >{{msg.msg}} - {{msg.id}}</span>
+																<span class="label label-pill label-success" >{{msg.userFrom.email}} - {{cc.updatedAt | date : format : timezone}} - {{msg.albumcard.name}}</span>
+											        </li>
+											      </ul>
+						 </div>
+					  </div>
+					</div>
+ </div>
+  

@@ -6,10 +6,13 @@
      </ul>
     </div>
   </nav>
-  <p>Elenco album</p>	
+
   <div class="row">
 		<div class="col-md-10">
      	<ul class="albums">
+     		<li class="thumbnail">
+					<span class="label label-pill label-warning" >Albums</span>
+				</li>
         <li ng-repeat="album in albums | filter:query | orderBy:orderProp" class="thumbnail">
         <span><a href="#/missing/{{album.id}}">{{album.name}}</a></span><span class="label label-pill label-success">{{album.userown.email}}</span>
         </li>

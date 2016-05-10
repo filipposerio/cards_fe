@@ -5,7 +5,8 @@
     	{{userLogIn}}
      </ul>
     </div>
-  </nav>	
+  </nav>
+  <p>Elenco album</p>	
   <div class="row">
 		<div class="col-md-10">
      	<ul class="albums">
