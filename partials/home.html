@@ -15,7 +15,7 @@
 				  	 <div class="row">
 											      <ul class="msgs">
 											      	<li class="thumbnail">
-											      		<span class="label label-pill label-warning" >Messages for {{userLogIn}}</span>
+											      		<span class="label label-pill label-warning" >Messages (card found by other users) for {{userLogIn}}</span>
 											      	</li>
 											        <li ng-repeat="msg in msgs"  class="thumbnail">
 											        	<span><button type="button" class="btn btn-danger btn-xs" ng-model="id" ng-show="{{msg.id != 1}}" ng-click="removeMsg(msg.id)" >clear msg</button></span>
