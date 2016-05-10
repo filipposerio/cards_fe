@@ -8,17 +8,20 @@ var phonecatControllers = angular.module('phonecatControllers', []);
 phonecatControllers.controller('CardsMainCtrl', [ '$scope','$http','$window',
    function($scope, $http,$window) {
     	
-    	
-    	
     	$scope.userLogIn = localStorage.getItem("usremail");
-      
-    	localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
-    	//localStorage.setItem("beServer",'localhost:1337');
-    	console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer") + "utente collegato:" + localStorage.getItem("usremail"));
-    	console.log("OK MAIN CONTROLLER - load last messges per "+localStorage.getItem("usr") );
+      console.log("OK home CONTROLLER - utente collegato:" + localStorage.getItem("usremail"));
+      console.log("OK home CONTROLLER - load last messges per "+localStorage.getItem("usr") );
+
       $http.get('http://'+localStorage.getItem("beServer")+'/cardmessages?userTo='+localStorage.getItem("usr") , { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
-      								console.log("OK elenco messaggi caricato");
-      								$scope.msgs = response.data;
+      								console.log("OK elenco messaggi  caricato [" +response.data +']');
+      								if (response.data =="" ) {
+      									$scope.msgs = [{id:"1",msg: "nessun messaggio"}];
+      								}
+      								else {
+      									$scope.msgs = response.data;
+      								}
+      							
+      								 
       								//carico gli album associati
 	  	}, function errorCallback(response) {
     									console.log("errore caricamento messaggi");
@@ -228,7 +231,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 	      								console.log(response.data.albumcard.id);
 	      								//send messages to user album 
 	      								console.log("send message. ricarica album con id:" + response.data.albumcard.id);	      									
-	      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card n.'+ response.data.card +' for you!').then(function successCallback(response) {
+	      								$http.post('http://'+localStorage.getItem("beServer")+'/cardmessages/create?userFrom='+localStorage.getItem("usr")+'&userTo='+localStorage.getItem("iduserown")+'&albumcard='+response.data.albumcard.id+'&msg=Found card N. '+ response.data.card +' for you!').then(function successCallback(response) {
 	      									console.log("ok send message. ricarica album con id:" + response.data.albumcard);	      									
 	      									$window.location.href = '#missing/'+response.data.albumcard;
 	      								}, function errorCallback(response) {
@@ -282,12 +285,18 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 
   phonecatControllers.controller('UserAuthCtrl', ['$scope', '$routeParams', '$http','$window',
   function($scope, $routeParams, $http,$window) {
+  	//localStorage.setItem("beServer",'fscardsbe.herokuapp.com');
+    localStorage.setItem("beServer",'localhost:1337');
+    console.log("OK MAIN CONTROLLER - beServer " +  localStorage.getItem("beServer"));
+
+
   	console.log("azzero il token");
   	localStorage.setItem("token","");
   	localStorage.setItem("usr","");
   	localStorage.setItem("usremail","");
   	localStorage.setItem("userLogIn","");
   	localStorage.setItem("admin","");
+  	
   	$scope.logInUser = function () {
   		console.log("OK user authorization controller vrifica token");
 
@@ -305,7 +314,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
                     localStorage.setItem("usremail",response.data.user.email);
                     localStorage.setItem("admin",response.data.user.admin);
                     //$scope.message= "user addedd with id: " + response.data.user.id + ". Token: " + localStorage.getItem("token");
-                    $window.location.href = '#users';
+                    $window.location.href = '#home';
                 },
 								function errorCallback(response) {
     									console.log("errore");

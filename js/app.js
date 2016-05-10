@@ -59,6 +59,6 @@ phonecatApp.config(['$routeProvider',
         controller: 'UserAlbumMissingCardCtrl'
       }).          
       otherwise({
-        redirectTo: '/home'
+        redirectTo: '/login'
       });
   }]);

@@ -18,8 +18,8 @@
 											      		<span class="label label-pill label-warning" >Messages for {{userLogIn}}</span>
 											      	</li>
 											        <li ng-repeat="msg in msgs"  class="thumbnail">
-											        	<span><button type="button" class="btn btn-danger btn-xs" ng-model="id" ng-click="removeMsg(msg.id)" >clear msg</button></span>
-											        	<span class="label label-pill label-warning" >{{msg.msg}} - {{msg.id}}</span>
+											        	<span><button type="button" class="btn btn-danger btn-xs" ng-model="id" ng-show="{{msg.id != 1}}" ng-click="removeMsg(msg.id)" >clear msg</button></span>
+											        	<span class="label label-pill label-warning" >{{msg.msg}}</span>
 																<span class="label label-pill label-success" >{{msg.userFrom.email}} - {{cc.updatedAt | date : format : timezone}} - {{msg.albumcard.name}}</span>
 											        </li>
 											      </ul>
