@@ -139,19 +139,24 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
     $scope.addMissingCard = function (card,textdescription) {
 		var cardarray = [];
 		cardarray = card.split(",");
-		var i;
 		
-	for (i=0; i<(cardarray.length); i++) {
+		var i;
+		for (i=0; i<(cardarray.length); i++) {
   	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
 	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/create?card='+cardarray[i]+'&textdescription='+textdescription+'&albumcard='+$routeParams.albumId).then(function successCallback(response) {
+	  										
 	      								$scope.cards.push(response.data);
+	      								
+	      								function sortNumber(a,b) {
+		    									return a.card - b.card;
+												};
 	      								$scope.cards.sort(sortNumber);
 		}, function errorCallback(response) {
 	      								$scope.cards = "";
 	      								$scope.message = "Non sei autorizzato. Effettua prima il LogIn";
 	      								$window.location.href = '#login';
 	  });
-	  $window.location.href = '#missing/'+$routeParams.albumId;
+	  
 	}
     },
     $scope.findMissingCard = function (cardId) {
