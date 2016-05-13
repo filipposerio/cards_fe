@@ -230,7 +230,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
     			console.log(temp);
     		}
     	}
-    	
+    	newcard.push(temp);
     	$scope.newcard = newcard;
 
     }

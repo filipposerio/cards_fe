@@ -131,6 +131,7 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
 				$scope.cards = response.data;
 				$scope.cards.sort(sortNumber);
 				$scope.albumsel = response.data[0].albumcard.name;
+				$scope.printable();
 		}, function errorCallback(response) {
 				$scope.cards = "";
 				$scope.message = "Non sei autorizzato. Effettua prima il LogIn";

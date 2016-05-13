@@ -22,13 +22,9 @@
 			     													<input type="text"  ng-model="card"            class="form-control"  placeholder="n. missing cards"  ng-required="true"/></br>
 			     													<input type="text"  ng-model="textdescription"  class="form-control"  placeholder="description"  /> </br>
 			     														<button  class="btn btn-default"  ng-click="formPhone.$valid && addMissingCard(card, textdescription)" >Add missing card</button>
-			     														<button  class="btn btn-default"  ng-click="printable()" >Printlist</button>
 			     													</span>
 		     													</div>
 		     												</li>
-															  <li ng-repeat="cc1 in newcard " class="thumbnail" >
-															        {{cc1}}
-															  </li>
 												      	<li class="thumbnail">
 											      			<span class="label label-pill label-warning" >Missing card for  [{{userown}}]  [{{albumsel}}]</span>
 											      		</li>		     												
@@ -38,8 +34,17 @@
 													        		<button type="button" class="btn btn-success btn-sm" ng-model="id" ng-click="findMissingCard(cc.id)" >found it!</button>
 													        		<span> N.{{cc.card}}</span>  <span>{{cc.textdescription}}</span><span class="label label-pill label-success">{{cc.foundby.email}}</span>
 													        		<span class="label label-pill label-success" ng-show="{{cc.foundby}}">{{cc.updatedAt | date : format : timezone}}</span>
-													        		
 													        </li>
+													        <li class="thumbnail">
+											      				<span class="label label-pill label-warning" >Show Missing card printable list [{{albumsel}}]</span>
+		     														
+		     														<input type="checkbox" ng-model="checked" >show<br/>
+											      			</li>	
+											      			<div class="check-element animate-show" ng-show="checked">
+															  	<li ng-repeat="cc1 in newcard " class="thumbnail" >
+															        {{cc1}}
+															  	</li>
+															  </div>
 												      </ul>
 							 </div>
 			</div>
