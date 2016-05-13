@@ -22,9 +22,16 @@
 			     													<input type="text"  ng-model="card"            class="form-control"  placeholder="n. missing cards"  ng-required="true"/></br>
 			     													<input type="text"  ng-model="textdescription"  class="form-control"  placeholder="description"  /> </br>
 			     														<button  class="btn btn-default"  ng-click="formPhone.$valid && addMissingCard(card, textdescription)" >Add missing card</button>
+			     														<button  class="btn btn-default"  ng-click="printable()" >Printlist</button>
 			     													</span>
 		     													</div>
 		     												</li>
+		     												<li class="thumbnail">
+											      			<span class="label label-pill label-warning" >Missing card printable list [{{albumsel}}]</span>
+											      		</li>	
+															  <li ng-repeat="cc1 in newcard " class="thumbnail" >
+															        {{cc1}}
+															  </li>
 												      	<li class="thumbnail">
 											      			<span class="label label-pill label-warning" >Missing card for  [{{userown}}]  [{{albumsel}}]</span>
 											      		</li>		     												
@@ -42,4 +49,3 @@
 		</div>
 	</form>
 </div>
-

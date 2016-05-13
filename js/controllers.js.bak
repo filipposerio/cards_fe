@@ -139,14 +139,14 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
     $scope.addMissingCard = function (card,textdescription) {
 		var cardarray = [];
 		cardarray = card.split(",");
-		console.log("prim di aggiungere: numero elementi " + $scope.cards.length);
+		
 		var i;
 		for (i=0; i<(cardarray.length); i++) {
   	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
 	  $http.post('http://'+localStorage.getItem("beServer")+'/missingcards/create?card='+cardarray[i]+'&textdescription='+textdescription+'&albumcard='+$routeParams.albumId).then(function successCallback(response) {
 	  										
 	      								$scope.cards.push(response.data);
-	      								console.log("dopo aggiunta: numero elementi " + $scope.cards.length);
+	      								
 	      								function sortNumber(a,b) {
 		    									return a.card - b.card;
 												};
@@ -212,6 +212,29 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
     		$scope.owner= 0;
     	}
     }
+    $scope.printable = function () {
+    	console.log($scope.cards);
+    	var i;
+    	var newcard = [];
+    	var temp ="";
+    	for (i=0; i < $scope.cards.length; i++) {
+    		console.log($scope.cards[i]);
+    		if (i!=0 &&  i % 10 === 0) {
+    			temp = temp + $scope.cards[i].card+ ",";
+    			newcard.push(temp);
+    			temp = "";
+    		}
+    		else
+    		{
+    			temp = temp + $scope.cards[i].card+ ",";
+    			console.log(temp);
+    		}
+    	}
+    	
+    	$scope.newcard = newcard;
+
+    }
+    
   }]);
 
 

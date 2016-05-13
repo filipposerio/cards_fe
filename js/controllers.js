@@ -212,6 +212,29 @@ phonecatControllers.controller('UserAlbumMissingCardCtrl', ['$scope', '$http','$
     		$scope.owner= 0;
     	}
     }
+    $scope.printable = function () {
+    	console.log($scope.cards);
+    	var i;
+    	var newcard = [];
+    	var temp ="";
+    	for (i=0; i < $scope.cards.length; i++) {
+    		console.log($scope.cards[i]);
+    		if (i!=0 &&  i % 10 === 0) {
+    			temp = temp + $scope.cards[i].card+ ",";
+    			newcard.push(temp);
+    			temp = "";
+    		}
+    		else
+    		{
+    			temp = temp + $scope.cards[i].card+ ",";
+    			console.log(temp);
+    		}
+    	}
+    	newcard.push(temp);
+    	$scope.newcard = newcard;
+
+    }
+    
   }]);
 
 
