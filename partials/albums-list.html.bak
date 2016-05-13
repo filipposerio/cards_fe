@@ -13,11 +13,8 @@
 					<span class="label label-pill label-warning" >search</span>
 					<input type="text"  ng-model="ncard"  class="form-control"  placeholder="card number"  /> </br>
 						<button  class="btn btn-default"  ng-click="searchMissingCard(ncard)" >search</button>
-					</span>					
+								
 				</li>
-        <li ng-repeat="album in albums | filter:query | orderBy:orderProp" class="thumbnail">
-        <span><a href="#/usersalbums/{{album.userown.id}}">{{album.name}}</a></span><span class="label label-pill label-success">{{album.userown.email}}</span>
-        </li>
       </ul>
 		</div>
   </div>

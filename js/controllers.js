@@ -319,6 +319,16 @@ phonecatControllers.controller('AlbumsListCtrl', ['$scope', '$http','$window',
   			});
        }
   	}
+    $scope.searchMissingCard = function (ncard) {
+    	 	$http.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem("token");
+    	 	
+     		$http.get('http://'+localStorage.getItem("beServer")+'/missingcards?card='+ ncard, { headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token")  }}).then(function successCallback(response) {
+      									$scope.albumconcardmancante = response.data;
+      									console.log($scope.albumconcardmancante);
+	  									}, function errorCallback(response) {
+      									$scope.albumconcardmancante = "";
+  										});
+  	}  	
   }]);
   
 
